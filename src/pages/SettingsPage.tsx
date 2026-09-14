@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '@/state/store';
+import { useAuth } from '@/state/auth';
 import { useTheme } from '@/state/theme';
 import { useToast } from '@/state/toast';
 import { PageHeader, SectionHeader } from '@/components/layout/PageHeader';
@@ -11,7 +12,8 @@ import { providers, ProviderUnavailableError } from '@/lib/fitness';
 import { formatInt } from '@/lib/format';
 
 export function SettingsPage() {
-  const { user, updateUser, resetDemo, activities } = useStore();
+  const { user, updateUser, resetDemo, activities, isRemote } = useStore();
+  const { signOut, isLocal } = useAuth();
   const { theme, setTheme, motion, setMotion } = useTheme();
   const { push } = useToast();
 
@@ -190,19 +192,41 @@ export function SettingsPage() {
       </section>
 
       <section className="section">
-        <SectionHeader title="Data" />
+        <SectionHeader title="Account" />
         <Card>
-          <div className="row row--between row--wrap" style={{ gap: 'var(--s-4)' }}>
-            <div>
-              <p className="field__label">Reset this account</p>
-              <p className="field__hint" style={{ maxWidth: '60ch' }}>
-                Restores the seeded demo history and clears anything you have logged in this browser. There is no
-                undo.
-              </p>
+          <div className="stack stack--lg">
+            <div className="row row--between row--wrap" style={{ gap: 'var(--s-4)' }}>
+              <div>
+                <p className="field__label">Signed in as</p>
+                <p className="field__hint" style={{ maxWidth: '60ch' }}>
+                  {isLocal
+                    ? 'No account. This browser holds a seeded demo journey, and nothing leaves it.'
+                    : `@${user.handle} — your walking record syncs to every device you sign in on.`}
+                </p>
+              </div>
+              {isLocal ? (
+                <Pill tone="locked">Local only</Pill>
+              ) : (
+                <Button variant="quiet" icon="logout" onClick={() => void signOut()}>
+                  Sign out
+                </Button>
+              )}
             </div>
-            <Button variant="danger" icon="trash" onClick={() => setConfirmReset(true)}>
-              Reset demo data
-            </Button>
+
+            {isLocal || !isRemote ? (
+              <div className="row row--between row--wrap" style={{ gap: 'var(--s-4)' }}>
+                <div>
+                  <p className="field__label">Reset this account</p>
+                  <p className="field__hint" style={{ maxWidth: '60ch' }}>
+                    Restores the seeded demo history and clears anything you have logged in this
+                    browser. There is no undo.
+                  </p>
+                </div>
+                <Button variant="danger" icon="trash" onClick={() => setConfirmReset(true)}>
+                  Reset demo data
+                </Button>
+              </div>
+            ) : null}
           </div>
         </Card>
       </section>

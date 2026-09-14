@@ -4,3 +4,6 @@ dist-standalone
 milepost-artifact.html
 *.local
 .DS_Store
+.env
+.env.local
+.env*.local

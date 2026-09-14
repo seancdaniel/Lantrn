@@ -1140,3 +1140,68 @@ button.rating__star:hover { transform: scale(1.1); }
   .statgrid { grid-template-columns: minmax(0, 1fr); }
   .milestone { flex-direction: column; }
 }
+
+/* Sign in ------------------------------------------------------------------
+   The first screen anyone sees. One card, centred, carrying the same type and
+   palette as the rest of the product. */
+
+.authpage {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--s-6) var(--s-4);
+  background: linear-gradient(180deg, var(--sky-1), var(--canvas) 60%);
+}
+
+.authcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  width: min(420px, 100%);
+  padding: var(--s-7);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.authcard__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
+}
+
+.authcard__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.authcard__sub {
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin-bottom: var(--s-2);
+}
+
+.authcard__switch {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  text-align: center;
+  margin-top: var(--s-2);
+}
+
+.authcard__switch button {
+  font-weight: 600;
+  color: var(--ember);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .authcard { padding: var(--s-5); }
+}

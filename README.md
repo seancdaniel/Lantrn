@@ -163,21 +163,90 @@ npm run build     # dist/
 | Output directory | `dist` |
 | Install command | `npm install` |
 
-No environment variables are required today — the app is entirely client-side and
-persists to `localStorage`, which makes it a working single-user app on any static
-host. Accounts and cross-device sync need the backend described below.
+With no environment variables the app still runs: it falls back to a seeded local
+account in the browser, so a deploy is never broken by a backend that has not been
+wired up yet.
+
+---
+
+## Supabase
+
+Accounts, cross-device sync and real persistence. Two variables switch it on;
+without them the local fallback above stays in charge.
+
+### 1. Run the migrations
+
+Paste each file into the Supabase SQL editor, in order:
+
+| File | What it does |
+| --- | --- |
+| `supabase/migrations/0001_schema.sql` | Tables, row level security, the leaderboard view, the photo bucket, and the trigger that gives every new sign-up a profile |
+| `supabase/migrations/0002_seed_content.sql` | The route itself — 5 destinations, 20 encounters, 9 milestones |
+
+The seed file is generated, never hand-written:
+
+```bash
+node scripts/generate-seed.mjs
+```
+
+It reads `src/data/*.ts` and emits upserts, so the route in the database cannot
+drift from the route in the code. Re-run it after editing the cast.
+
+### 2. Set the variables
+
+```bash
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-public-key
+```
+
+Locally in `.env.local`; on Vercel under Settings → Environment Variables, then
+redeploy.
+
+**Vite only exposes variables prefixed `VITE_`.** The Vercel–Supabase integration
+injects `SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_*`, none of which reach a client
+bundle. These two have to be added by hand.
+
+The anon key belongs in the browser — it is public by design and carries no
+authority of its own. Row level security is what protects the data. **The service
+role key must never appear in this project.**
+
+### 3. Make yourself an admin
+
+Roles live in the database, not the client:
+
+```sql
+update public.profiles set role = 'admin' where handle = 'your-handle';
+```
+
+### How the data is governed
+
+Content (destinations, characters, milestones) is readable by everyone and
+writable only by admins. Records (profiles, activities, encounters) are readable
+only by their owner — there is no exception, including for admins.
+
+The one deliberate crossing is the leaderboard, which is a view rather than a
+table. It exposes per-person totals for people who switched visibility on, and
+runs as its owner precisely so it can aggregate rows the caller cannot read.
+Individual walks stay private.
+
+Encounter photos go to a private bucket keyed by user id and are read back
+through short-lived signed URLs, rather than sitting in a column as base64.
+
+### Swapping the backend
+
+`src/lib/db/types.ts` defines a `PersistenceAdapter`. There are two
+implementations — `localAdapter.ts` and `supabaseAdapter.ts` — and `App.tsx`
+picks one. Nothing above that seam knows which is in use: no page, no component,
+no selector changed when Postgres was added.
 
 ## Not built
 
 Stated plainly so nothing here is mistaken for finished:
 
-- **Authentication.** There is a `role` field and the admin area checks it, but there is no
-  identity provider, no session, and no server. The demo account is seeded locally.
-  **The admin check is client-side only** — it decides what to render, and protects
-  nothing. Anything real has to enforce the role server-side.
-- **Backend.** Everything is `localStorage`. The data model is shaped for a relational
-  store, but no API exists. Persistence is isolated to `load()` and one effect in
-  `src/state/store.tsx`, so swapping in a real database does not touch any page or
-  component — every screen reads through the `useJourney()` selector.
-- **Friends and leaderboard** are seeded fixtures, not a real social graph.
+- **Friends** is a seeded fixture, not a real social graph. There is no request,
+  acceptance or friendship table yet — the Supabase leaderboard view is real, the
+  friend list above it is not.
+- **Email confirmation** is whatever the Supabase project is configured to do.
+  The sign-up screen assumes confirmation is on and tells people to check their inbox.
+- **Fitness integrations.** Registered, deliberately unimplemented; see above.
 - **PWA** ships a manifest and icons; there is no service worker or offline cache.
