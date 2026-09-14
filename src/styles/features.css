@@ -60,6 +60,18 @@
   user-select: none;
 }
 
+/* The tint tone is a mid colour: right on a light plate, nearly invisible on a
+   dark one. Dark mode takes the palette's light end instead. */
+:root[data-theme='dark'] .plate__monogram {
+  color: color-mix(in srgb, var(--plate-glow, var(--ink-3)) 52%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .plate__monogram {
+    color: color-mix(in srgb, var(--plate-glow, var(--ink-3)) 52%, transparent);
+  }
+}
+
 .plate__lock {
   display: grid;
   place-items: center;

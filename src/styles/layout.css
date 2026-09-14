@@ -394,7 +394,7 @@
   .pagehead { margin-bottom: var(--s-6); align-items: flex-start; flex-direction: column; }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 560px) {
   .grid--2,
   .grid--3,
   .grid--4 { grid-template-columns: minmax(0, 1fr); }

@@ -120,7 +120,7 @@ export function FriendsPage() {
                     <ProgressBar value={share} ariaLabel={`${friend.handle} route progress`} />
                   </div>
 
-                  <div className="row" style={{ marginTop: 'var(--s-4)', gap: 'var(--s-2)' }}>
+                  <div className="row row--wrap" style={{ marginTop: 'var(--s-4)', gap: 'var(--s-2)' }}>
                     <Button
                       size="sm"
                       variant="quiet"

@@ -140,7 +140,7 @@ export function SettingsPage() {
               <Card key={provider.id}>
                 <div className="row row--between row--wrap" style={{ gap: 'var(--s-4)' }}>
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="row" style={{ gap: 'var(--s-3)' }}>
+                    <div className="row row--wrap" style={{ gap: 'var(--s-2) var(--s-3)' }}>
                       <h3 className="charcard__name">{provider.name}</h3>
                       {status === 'connected' ? (
                         <Pill tone="complete">Connected</Pill>

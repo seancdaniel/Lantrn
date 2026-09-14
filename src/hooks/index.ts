@@ -52,7 +52,9 @@ export function useCountUp(target: number, duration = 1100, decimals = 0) {
   const frame = useRef(0);
 
   useEffect(() => {
-    if (reduced) {
+    // A hidden tab throttles requestAnimationFrame, which used to leave every
+    // figure sitting at zero until the tab was focused. Snap instead.
+    if (reduced || document.visibilityState === 'hidden') {
       setValue(target);
       return;
     }
