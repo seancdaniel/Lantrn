@@ -934,9 +934,12 @@ button.rating__star:hover { transform: scale(1.1); }
   color: var(--ink-3);
 }
 
+/* The widest value here is a seven-digit step count set at 30px with tabular
+   figures — about 132px of glyphs plus 48px of cell padding. A 160px track
+   clipped it, so the floor is set from the content rather than guessed. */
 .statgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1px;
   background: var(--line-faint);
   border: 1px solid var(--line);
@@ -959,6 +962,7 @@ button.rating__star:hover { transform: scale(1.1); }
   letter-spacing: var(--tracking-tight);
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .statgrid__label { font-size: var(--text-xs); color: var(--ink-3); line-height: 1.4; }
