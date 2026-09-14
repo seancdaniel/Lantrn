@@ -1,0 +1,214 @@
+/* ---------------------------------------------------------------------------
+   Milepost design tokens
+   Light is the origin palette; dark is a separately tuned atmosphere, not an
+   inversion. Every surface, line and accent is defined in both.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Type ------------------------------------------------------------------ */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --text-eyebrow: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.375rem;
+  --display-sm: clamp(1.875rem, 1.4rem + 1.8vw, 2.5rem);
+  --display-md: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
+  --display-lg: clamp(3rem, 2rem + 4.4vw, 5.25rem);
+
+  --leading-tight: 1.06;
+  --leading-snug: 1.28;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.68;
+
+  --tracking-eyebrow: 0.14em;
+  --tracking-tight: -0.01em;
+  --tracking-display: -0.018em;
+
+  /* Space — one scale, used everywhere. No component invents a value. --------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  /* Radius ---------------------------------------------------------------- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 24px;
+  --r-full: 999px;
+
+  /* Motion ---------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 520ms;
+  --dur-reveal: 1100ms;
+
+  /* Layout ---------------------------------------------------------------- */
+  --rail-w: 244px;
+  --page-max: 1240px;
+  --bottom-nav-h: 62px;
+
+  /* Light palette --------------------------------------------------------- */
+  --canvas: #f6f4f0;
+  --canvas-deep: #efebe4;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f1ede6;
+  --surface-inset: #faf8f5;
+
+  --ink: #17150f;
+  --ink-2: #4c463c;
+  --ink-3: #7d7568;
+  --ink-4: #a49b8c;
+
+  --line: #e4dfd6;
+  --line-strong: #d2cabc;
+  --line-faint: #eeeae3;
+
+  --ember: #be5f2e;
+  --ember-ink: #97481f;
+  --ember-soft: #f7e7da;
+  --ember-line: #e8c8ab;
+
+  --dusk: #2b4a55;
+  --dusk-soft: #e2ecef;
+  --moss: #4b6b4f;
+  --moss-soft: #e4ede2;
+  --gold: #9d7a2c;
+  --gold-soft: #f2ead4;
+  --danger: #a03d33;
+  --danger-soft: #f7e4e1;
+
+  --on-accent: #fffaf5;
+  --focus: var(--ember);
+
+  --shadow-xs: 0 1px 2px rgb(23 21 15 / 0.05);
+  --shadow-sm: 0 2px 6px -2px rgb(23 21 15 / 0.08);
+  --shadow-md: 0 14px 34px -20px rgb(23 21 15 / 0.28);
+  --shadow-lg: 0 30px 60px -34px rgb(23 21 15 / 0.34);
+
+  --scrim: rgb(23 21 15 / 0.42);
+  --grain-opacity: 0.5;
+  --sky-1: #f3ece2;
+  --sky-2: #e7ddd0;
+  --map-ground: #f4efe6;
+
+  color-scheme: light;
+}
+
+/* Dark is applied twice on purpose: once for the system default, once for an
+   explicit choice, so the theme toggle wins in both directions. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --canvas: #0d0f12;
+    --canvas-deep: #08090b;
+    --surface: #14171b;
+    --surface-raised: #191d22;
+    --surface-sunken: #0f1216;
+    --surface-inset: #171b20;
+
+    --ink: #f1eee8;
+    --ink-2: #bab4a9;
+    --ink-3: #8b8579;
+    --ink-4: #6a6459;
+
+    --line: #262b31;
+    --line-strong: #363c44;
+    --line-faint: #1d2126;
+
+    --ember: #e08a4e;
+    --ember-ink: #f0a76f;
+    --ember-soft: #2a1d13;
+    --ember-line: #4a3220;
+
+    --dusk: #86b6c6;
+    --dusk-soft: #14232a;
+    --moss: #8fb396;
+    --moss-soft: #16221a;
+    --gold: #d6ae62;
+    --gold-soft: #241d10;
+    --danger: #e08a80;
+    --danger-soft: #2a1512;
+
+    --on-accent: #17120c;
+    --focus: var(--ember);
+
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 16px 40px -22px rgb(0 0 0 / 0.8);
+    --shadow-lg: 0 34px 70px -36px rgb(0 0 0 / 0.9);
+
+    --scrim: rgb(4 5 7 / 0.66);
+    --grain-opacity: 0.85;
+    --sky-1: #131a26;
+    --sky-2: #0b0f16;
+    --map-ground: #0f141b;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --canvas: #0d0f12;
+  --canvas-deep: #08090b;
+  --surface: #14171b;
+  --surface-raised: #191d22;
+  --surface-sunken: #0f1216;
+  --surface-inset: #171b20;
+
+  --ink: #f1eee8;
+  --ink-2: #bab4a9;
+  --ink-3: #8b8579;
+  --ink-4: #6a6459;
+
+  --line: #262b31;
+  --line-strong: #363c44;
+  --line-faint: #1d2126;
+
+  --ember: #e08a4e;
+  --ember-ink: #f0a76f;
+  --ember-soft: #2a1d13;
+  --ember-line: #4a3220;
+
+  --dusk: #86b6c6;
+  --dusk-soft: #14232a;
+  --moss: #8fb396;
+  --moss-soft: #16221a;
+  --gold: #d6ae62;
+  --gold-soft: #241d10;
+  --danger: #e08a80;
+  --danger-soft: #2a1512;
+
+  --on-accent: #17120c;
+  --focus: var(--ember);
+
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 16px 40px -22px rgb(0 0 0 / 0.8);
+  --shadow-lg: 0 34px 70px -36px rgb(0 0 0 / 0.9);
+
+  --scrim: rgb(4 5 7 / 0.66);
+  --grain-opacity: 0.85;
+  --sky-1: #131a26;
+  --sky-2: #0b0f16;
+  --map-ground: #0f141b;
+
+  color-scheme: dark;
+}
