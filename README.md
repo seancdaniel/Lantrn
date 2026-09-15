@@ -182,6 +182,7 @@ Paste each file into the Supabase SQL editor, in order:
 | --- | --- |
 | `supabase/migrations/0001_schema.sql` | Tables, row level security, the leaderboard view, the photo bucket, and the trigger that gives every new sign-up a profile |
 | `supabase/migrations/0002_seed_content.sql` | The route itself — 5 destinations, 20 encounters, 9 milestones |
+| `supabase/migrations/0003_tighten_profile_reads.sql` | Narrows profile reads to owner-and-admin (see below) |
 
 The seed file is generated, never hand-written:
 
@@ -222,8 +223,14 @@ update public.profiles set role = 'admin' where handle = 'your-handle';
 ### How the data is governed
 
 Content (destinations, characters, milestones) is readable by everyone and
-writable only by admins. Records (profiles, activities, encounters) are readable
-only by their owner — there is no exception, including for admins.
+writable only by admins. Records (activities, encounters) are readable only by
+their owner — no exception, including for admins. Profiles are readable by their
+owner and by admins.
+
+`0001` originally allowed any profile row to be read when `leaderboard_visible`
+was true, which defaults to true — so real names and the role column were
+readable by anyone holding the publishable key. `0003` removes that clause.
+Nothing needed it: the leaderboard reads the view, not the table.
 
 The one deliberate crossing is the leaderboard, which is a view rather than a
 table. It exposes per-person totals for people who switched visibility on, and
