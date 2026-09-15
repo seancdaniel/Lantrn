@@ -3,7 +3,7 @@ import { Icon } from '@/components/ui/Icon';
 import { useDocumentMeta } from '@/hooks';
 
 export function NotFound() {
-  useDocumentMeta('We lost the trail · Milepost');
+  useDocumentMeta('We lost the trail · Lantrn');
 
   return (
     <div className="page">

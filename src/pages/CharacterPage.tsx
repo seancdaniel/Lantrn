@@ -30,8 +30,8 @@ export function CharacterPage() {
 
   useDocumentMeta(
     entry
-      ? `${entry.status === 'locked' ? 'Locked encounter' : entry.character.name} · Milepost`
-      : 'Encounter not found · Milepost',
+      ? `${entry.status === 'locked' ? 'Locked encounter' : entry.character.name} · Lantrn`
+      : 'Encounter not found · Lantrn',
     entry && entry.status !== 'locked'
       ? `${entry.character.name} — ${entry.character.epithet}. ${formatMiles(entry.character.requiredMiles)} miles of walking to reach this encounter.`
       : undefined,

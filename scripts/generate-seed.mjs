@@ -19,7 +19,7 @@ const n = (v) => Number(v).toFixed(2);
 async function load(file, exportName) {
   const src = await readFile(join('src/data', file), 'utf8');
   const { code } = await transform(src, { loader: 'ts', format: 'esm' });
-  const dir = await mkdtemp(join(tmpdir(), 'milepost-seed-'));
+  const dir = await mkdtemp(join(tmpdir(), 'lantrn-seed-'));
   const path = join(dir, 'mod.mjs');
   await writeFile(path, code, 'utf8');
   try {

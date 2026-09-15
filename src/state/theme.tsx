@@ -22,8 +22,8 @@ function resolve(choice: ThemeChoice): 'light' | 'dark' {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useLocalStorage<ThemeChoice>('milepost.theme', 'system');
-  const [motion, setMotion] = useLocalStorage<MotionChoice>('milepost.motion', 'system');
+  const [theme, setTheme] = useLocalStorage<ThemeChoice>('lantrn.theme', 'system');
+  const [motion, setMotion] = useLocalStorage<MotionChoice>('lantrn.motion', 'system');
 
   useEffect(() => {
     const root = document.documentElement;

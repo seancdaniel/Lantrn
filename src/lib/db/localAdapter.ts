@@ -8,7 +8,7 @@ import { buildSeedEncounters } from '@/data/encounters';
 import { sortByOrder } from '@/lib/progress';
 import type { EncounterInput, LogInput, PersistenceAdapter, Snapshot } from './types';
 
-const STORAGE_KEY = 'milepost.state.v1';
+const STORAGE_KEY = 'lantrn.state.v1';
 
 function buildSeed(): Snapshot {
   const activities = buildActivityHistory(demoUser.id, DEFAULT_STEPS_PER_MILE);

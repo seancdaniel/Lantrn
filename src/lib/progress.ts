@@ -20,7 +20,7 @@ export const LEVEL_TITLES = [
   'First Steps', 'Pathfinder', 'Wanderer', 'Trailgoer', 'Roamer',
   'Lantern Bearer', 'Waymarker', 'Trailblazer', 'Far Walker', 'Realm Traveler',
   'Longstrider', 'Journeyer', 'Pathmaster', 'Realm Explorer', 'Wayfinder',
-  'Horizon Chaser', 'Milewright', 'Grand Voyager', 'Legend of the Road', 'Living Milepost',
+  'Horizon Chaser', 'Milewright', 'Grand Voyager', 'Legend of the Road', 'Living Landmark',
 ];
 
 export const sortByOrder = <T extends { order: number }>(items: T[]) =>

@@ -15,7 +15,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     // In production this is where a real reporter would be called.
-    console.error('Milepost render error', error, info.componentStack);
+    console.error('Lantrn render error', error, info.componentStack);
   }
 
   render() {

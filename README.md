@@ -1,4 +1,4 @@
-# Milepost
+# Lantrn
 
 **Every mile brings you closer.**
 

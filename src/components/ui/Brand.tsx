@@ -30,7 +30,7 @@ export function Brandmark({ size = 34, className }: { size?: number; className?:
 export function Wordmark({ withTagline = true }: { withTagline?: boolean }) {
   return (
     <span className="wordmark">
-      Milepost
+      Lantrn
       {withTagline ? <span className="wordmark__sub">Every mile counts</span> : null}
     </span>
   );

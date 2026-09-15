@@ -19,7 +19,7 @@ export function PageHeader({
   documentTitle,
   documentDescription,
 }: Props) {
-  useDocumentMeta(documentTitle ?? `${title} · Milepost`, documentDescription ?? description);
+  useDocumentMeta(documentTitle ?? `${title} · Lantrn`, documentDescription ?? description);
 
   return (
     <header className="pagehead">

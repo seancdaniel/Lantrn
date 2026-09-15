@@ -28,7 +28,7 @@ export function Dashboard() {
   const [logOpen, setLogOpen] = useState(false);
 
   useDocumentMeta(
-    'Milepost — Every mile brings you closer',
+    'Lantrn — Every mile brings you closer',
     'Your adventure so far: miles walked, steps taken, and the character encounter waiting at the end of this leg.',
   );
 

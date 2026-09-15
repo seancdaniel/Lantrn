@@ -18,8 +18,8 @@ export function SignIn() {
   const [sent, setSent] = useState(false);
 
   useDocumentMeta(
-    'Sign in · Milepost',
-    'Sign in to Milepost and pick your adventure back up where you left it.',
+    'Sign in · Lantrn',
+    'Sign in to Lantrn and pick your adventure back up where you left it.',
   );
 
   const submit = async (event: FormEvent) => {
