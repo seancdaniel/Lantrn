@@ -196,19 +196,20 @@ drift from the route in the code. Re-run it after editing the cast.
 
 ```bash
 VITE_SUPABASE_URL=https://your-project-ref.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-public-key
+VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Locally in `.env.local`; on Vercel under Settings → Environment Variables, then
-redeploy.
+Both come from Project Settings → API Keys. Locally in `.env.local`; on Vercel
+under Settings → Environment Variables, then redeploy.
 
 **Vite only exposes variables prefixed `VITE_`.** The Vercel–Supabase integration
 injects `SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_*`, none of which reach a client
 bundle. These two have to be added by hand.
 
-The anon key belongs in the browser — it is public by design and carries no
-authority of its own. Row level security is what protects the data. **The service
-role key must never appear in this project.**
+This uses the **publishable** key (`sb_publishable_…`), not the legacy `anon` JWT
+that Supabase is phasing out. It belongs in the browser: it carries no authority
+of its own, and row level security is what protects the data. **The secret key
+must never appear in this project.**
 
 ### 3. Make yourself an admin
 
