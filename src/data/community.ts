@@ -10,6 +10,7 @@ export const demoUser: User = {
   createdAt: START_DATE,
   role: 'admin',
   stepsPerMile: 2000.5,
+  leaderboardVisible: true,
 };
 
 /**

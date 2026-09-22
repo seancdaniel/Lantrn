@@ -29,6 +29,22 @@ export interface LogInput {
 export type EncounterInput = Omit<Encounter, 'id' | 'userId'> & { id?: string };
 
 /**
+ * One row of the community ranking.
+ *
+ * Steps rather than miles, because every walker has their own stride — a row is
+ * converted using *that person's* steps_per_mile, never the viewer's.
+ */
+export interface LeaderboardEntry {
+  handle: string;
+  stepsPerMile: number;
+  lifetimeSteps: number;
+  weeklySteps: number;
+  monthlySteps: number;
+  walkingDays: number;
+  encountersLogged: number;
+}
+
+/**
  * The seam between the product and wherever its data happens to live.
  *
  * Both implementations satisfy this: one writes to local storage, the other to
@@ -41,6 +57,9 @@ export interface PersistenceAdapter {
   readonly isRemote: boolean;
 
   load(): Promise<Snapshot>;
+
+  /** Other people's totals. Only those who opted in are returned. */
+  fetchLeaderboard(): Promise<LeaderboardEntry[]>;
 
   logActivity(input: LogInput): Promise<void>;
   deleteActivity(id: string): Promise<void>;

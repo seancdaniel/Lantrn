@@ -2,11 +2,17 @@ import type { Activity, Announcement, Character, Destination, Encounter, Milesto
 import { characters as seedCharacters } from '@/data/characters';
 import { destinations as seedDestinations } from '@/data/destinations';
 import { milestones as seedMilestones } from '@/data/milestones';
-import { announcements as seedAnnouncements, demoUser } from '@/data/community';
+import { announcements as seedAnnouncements, communityMembers, demoUser } from '@/data/community';
 import { DEFAULT_STEPS_PER_MILE, buildActivityHistory } from '@/data/activity';
 import { buildSeedEncounters } from '@/data/encounters';
 import { sortByOrder } from '@/lib/progress';
-import type { EncounterInput, LogInput, PersistenceAdapter, Snapshot } from './types';
+import type {
+  EncounterInput,
+  LeaderboardEntry,
+  LogInput,
+  PersistenceAdapter,
+  Snapshot,
+} from './types';
 
 const STORAGE_KEY = 'lantrn.state.v1';
 
@@ -44,6 +50,20 @@ export class LocalAdapter implements PersistenceAdapter {
       this.state = buildSeed();
     }
     return this.state;
+  }
+
+  /** The seeded community, shaped exactly like the database view returns it. */
+  async fetchLeaderboard(): Promise<LeaderboardEntry[]> {
+    const stride = this.state.user.stepsPerMile;
+    return communityMembers.map((m) => ({
+      handle: m.handle,
+      stepsPerMile: stride,
+      lifetimeSteps: Math.round(m.lifetimeMiles * stride),
+      weeklySteps: m.weeklySteps,
+      monthlySteps: Math.round(m.monthlyMiles * stride),
+      walkingDays: 0,
+      encountersLogged: m.charactersUnlocked,
+    }));
   }
 
   private commit(next: Partial<Snapshot>) {

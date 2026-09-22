@@ -9,7 +9,14 @@ import type {
   User,
 } from '@/types';
 import { ENCOUNTER_PHOTO_BUCKET } from '@/lib/supabase/client';
-import { AdapterError, type EncounterInput, type LogInput, type PersistenceAdapter, type Snapshot } from './types';
+import {
+  AdapterError,
+  type EncounterInput,
+  type LeaderboardEntry,
+  type LogInput,
+  type PersistenceAdapter,
+  type Snapshot,
+} from './types';
 
 /* Row shapes, mirroring supabase/migrations/0001_schema.sql --------------- */
 
@@ -91,6 +98,7 @@ const toUser = (r: ProfileRow): User => ({
   createdAt: r.created_at,
   role: r.role,
   stepsPerMile: Number(r.steps_per_mile),
+  leaderboardVisible: r.leaderboard_visible,
 });
 
 /** Distance is derived here exactly as it is everywhere else: steps ÷ stride. */
@@ -206,6 +214,29 @@ export class SupabaseAdapter implements PersistenceAdapter {
     };
   }
 
+  /**
+   * Reads the leaderboard view, never the tables behind it. The view aggregates
+   * as its owner, so this returns totals for people whose individual walks this
+   * caller cannot read — and only for those who opted in.
+   */
+  async fetchLeaderboard(): Promise<LeaderboardEntry[]> {
+    const { data, error } = await this.db
+      .from('leaderboard')
+      .select('*')
+      .order('lifetime_steps', { ascending: false });
+    if (error) this.fail('load the leaderboard', error);
+
+    return (data ?? []).map((r) => ({
+      handle: r.handle as string,
+      stepsPerMile: Number(r.steps_per_mile),
+      lifetimeSteps: Number(r.lifetime_steps),
+      weeklySteps: Number(r.weekly_steps),
+      monthlySteps: Number(r.monthly_steps),
+      walkingDays: Number(r.walking_days),
+      encountersLogged: Number(r.encounters_logged),
+    }));
+  }
+
   /** The bucket is private, so photos are read through short-lived signed URLs. */
   private async resolvePhotos(rows: EncounterRow[]): Promise<Map<string, string>> {
     const withPhotos = rows.filter((r) => r.photo_path);
@@ -270,6 +301,7 @@ export class SupabaseAdapter implements PersistenceAdapter {
     if (patch.handle !== undefined) row.handle = patch.handle;
     if (patch.avatar !== undefined) row.avatar_url = patch.avatar;
     if (patch.stepsPerMile !== undefined) row.steps_per_mile = patch.stepsPerMile;
+    if (patch.leaderboardVisible !== undefined) row.leaderboard_visible = patch.leaderboardVisible;
     if (Object.keys(row).length === 0) return;
 
     const { error } = await this.db.from('profiles').update(row).eq('id', this.userId);

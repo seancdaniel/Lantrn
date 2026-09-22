@@ -11,7 +11,13 @@ import {
 import type { Announcement, Character, Destination, Milestone, User } from '@/types';
 import { communityMembers, feed } from '@/data/community';
 import { TODAY } from '@/data/activity';
-import type { EncounterInput, LogInput, PersistenceAdapter, Snapshot } from '@/lib/db/types';
+import type {
+  EncounterInput,
+  LeaderboardEntry,
+  LogInput,
+  PersistenceAdapter,
+  Snapshot,
+} from '@/lib/db/types';
 import { useToast } from '@/state/toast';
 import {
   computeCharacterProgress,
@@ -31,6 +37,7 @@ interface StoreValue extends Snapshot {
   today: string;
   /** True when writes reach a server rather than this browser alone. */
   isRemote: boolean;
+  fetchLeaderboard: () => Promise<LeaderboardEntry[]>;
   logActivity: (input: LogInput) => void;
   deleteActivity: (id: string) => void;
   updateUser: (patch: Partial<User>) => void;
@@ -133,6 +140,7 @@ export function StoreProvider({
       ...state,
       today: TODAY,
       isRemote: adapter.isRemote,
+      fetchLeaderboard: () => adapter.fetchLeaderboard(),
 
       logActivity: (input) =>
         mutate((s) => {

@@ -11,6 +11,8 @@ export interface User {
   role: Role;
   /** Steps per mile, derived from stride length. Editable in Settings. */
   stepsPerMile: number;
+  /** Opt in to appearing on the community leaderboard. */
+  leaderboardVisible: boolean;
 }
 
 export interface Activity {
