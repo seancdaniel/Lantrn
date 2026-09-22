@@ -52,7 +52,28 @@ export const ROUTE_STOPS: Point[] = [
   { x: 1020, y: 308 },
   { x: 1072, y: 378 },
   { x: 1118, y: 470 },
+  { x: 1168, y: 566 },
 ];
 
-export const MAP_VIEWBOX = { w: 1200, h: 700 };
+export const MAP_VIEWBOX = { w: 1280, h: 700 };
+
+/**
+ * Position for an encounter at `index`.
+ *
+ * The map used to read `ROUTE_STOPS[i % length]`, which meant a twenty-first
+ * encounter landed silently on top of the first. Admins can add characters, so
+ * running past the authored stops has to keep going rather than wrap: beyond
+ * the last stop the path is extended along its final heading.
+ */
+export function stopFor(index: number): Point {
+  if (index < ROUTE_STOPS.length) return ROUTE_STOPS[index];
+
+  const last = ROUTE_STOPS[ROUTE_STOPS.length - 1];
+  const prev = ROUTE_STOPS[ROUTE_STOPS.length - 2];
+  const step = index - (ROUTE_STOPS.length - 1);
+  return {
+    x: last.x + (last.x - prev.x) * step * 0.55,
+    y: last.y + (last.y - prev.y) * step * 0.55,
+  };
+}
 

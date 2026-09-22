@@ -221,6 +221,17 @@ export const characters: Character[] = [
     requiredMiles: 185,
     destinationId: 'mountain-road',
     order: 19,
-    note: 'The final encounter of the route.',
+    note: 'The end of the quest itself. One encounter waits beyond it.',
+  },
+  {
+    id: 'hymnkeeper',
+    name: 'The Hymnkeeper',
+    epithet: 'Walks ahead, carrying the only light',
+    description:
+      'Comes up the road at dusk swinging a lantern and singing something you half recognise. By the time he has gone past, a fair number of the people behind you are walking with him instead. Puts the light out when he is finished talking, and lets the dark do the rest of the work.',
+    requiredMiles: 100,
+    destinationId: 'mountain-road',
+    order: 20,
+    note: 'A coda. The quest ends at the fire; this is who is waiting on the road afterwards.',
   },
 ];

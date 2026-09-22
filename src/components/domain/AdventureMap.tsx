@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { CharacterProgress, Destination, DestinationProgress } from '@/types';
-import { MAP_VIEWBOX, ROUTE_STOPS, smoothPath } from '@/lib/svg';
+import { MAP_VIEWBOX, smoothPath, stopFor } from '@/lib/svg';
 import { formatMiles } from '@/lib/format';
 import { Pill, StatusPill } from '@/components/ui/Primitives';
 import { ButtonLink } from '@/components/ui/Button';
@@ -27,7 +27,7 @@ export function AdventureMap({ progress, destinations, totalMiles, routeMiles }:
   const reduced = usePrefersReducedMotion();
 
   const stops = useMemo(
-    () => progress.map((entry, i) => ({ entry, point: ROUTE_STOPS[i % ROUTE_STOPS.length] })),
+    () => progress.map((entry, i) => ({ entry, point: stopFor(i) })),
     [progress],
   );
 

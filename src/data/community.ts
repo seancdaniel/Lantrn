@@ -45,7 +45,7 @@ export const announcements: Announcement[] = [
   {
     id: 'an_1',
     title: 'A sixth destination is being surveyed',
-    body: 'Four new encounters are in production beyond the Clockwork Quarter. Anyone who finishes the route before it ships keeps their completion record.',
+    body: 'Four new encounters are in production beyond the Mountain Road. Anyone who finishes the route before it ships keeps their completion record.',
     publishedAt: '2026-09-01',
     active: true,
   },
