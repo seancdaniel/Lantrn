@@ -34,14 +34,33 @@
   border-radius: var(--r-md);
 }
 
-.rail__brand:hover .brandmark { transform: rotate(-8deg); }
+.rail__brand:hover .brandmark { transform: rotate(-5deg); }
 
 .brandmark {
-  width: 34px;
-  height: 34px;
+  position: relative;
+  display: inline-block;
   flex: none;
-  border-radius: 9px;
   transition: transform var(--dur) var(--ease-out);
+  transform-origin: 50% 12%;
+}
+
+.brandmark__art {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Two files, swapped in CSS so the in-app toggle and the un-stamped system
+   default both resolve without a re-render. */
+.brandmark__art--dark { display: none; }
+
+:root[data-theme='dark'] .brandmark__art--light { display: none; }
+:root[data-theme='dark'] .brandmark__art--dark { display: block; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .brandmark__art--light { display: none; }
+  :root:not([data-theme='light']) .brandmark__art--dark { display: block; }
 }
 
 .wordmark {
@@ -57,10 +76,17 @@
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-4);
-  margin-top: 3px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* The rail narrows to 214px between 1024 and 1180, where the tagline no longer
+   fits beside the mark. The wordmark alone carries it there. */
+@media (max-width: 1180px) {
+  .rail .wordmark__sub { display: none; }
 }
 
 .rail__nav {
