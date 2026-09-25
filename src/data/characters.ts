@@ -35,10 +35,10 @@ export const characters: Character[] = [
   },
   {
     id: 'lakekeeper',
-    name: 'The Lakekeeper',
-    epithet: 'Rows the new ones across',
+    name: 'The Boneflyer',
+    epithet: 'Pulls the carriage no one else can see',
     description:
-      'Enormous, gentle, and unreasonably fond of things with teeth. Takes the first-years over the black water at dusk because the view from the boat is the whole point.',
+      'Waits in the traces after dark, wings folded, invisible to anyone who has never lost something. Gentle with the ones who can see it, and unbothered by the ones who cannot.',
     requiredMiles: 15,
     destinationId: 'hidden-school',
     order: 2,
