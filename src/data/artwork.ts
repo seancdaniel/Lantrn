@@ -19,6 +19,7 @@ export const DESTINATION_ARTWORK_DIR = '/artwork/destinations';
 export const characterArtwork: Record<string, string> = {
   letterbearer: 'letterbearer.webp',
   'platform-warden': 'platform-warden.webp',
+  lakekeeper: 'lakekeeper.webp',
 };
 
 /** destinationId → filename in `public/artwork/destinations/`. */
